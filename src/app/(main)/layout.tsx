@@ -1,4 +1,5 @@
 import { Home, Money, User } from "iconsax-react";
+import Link from "next/link";
 import React from "react";
 
 const MainLayout = ({ children }: Readonly<{ children: React.ReactNode }>) => {
@@ -12,10 +13,16 @@ const MainLayout = ({ children }: Readonly<{ children: React.ReactNode }>) => {
         <span className="absolute -right-2 bottom-36 border border-4 border-black h-10 rounded-md" />
         <div className="flex flex-col justify-between h-full">
           <div className="h-full bg-gray-200 rounded-t-2xl p-2">{children}</div>
-          <div className="h-16 p-2 bg-gray-200 rounded-b-2xl border-t border-gray-300 flex items-center justify-between">
-            <Home size="32" color="black" />
-            <Money size="32" color="black" />
-            <User size="32" color="black" />
+          <div className="h-16 py-2 px-3 bg-gray-200 rounded-b-2xl border-t border-gray-300 flex items-center justify-between">
+            <Link href="/">
+              <Home size="32" color="black" />
+            </Link>
+            <Link href="/expenses">
+              <Money size="32" color="black" />
+            </Link>
+            <Link href="/user">
+              <User size="32" color="black" />
+            </Link>
           </div>
         </div>
       </div>
