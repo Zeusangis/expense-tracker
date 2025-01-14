@@ -1,6 +1,32 @@
-import Link from "next/link";
+"use client";
 
-export default function Register() {
+import { register } from "@/actions/auth/auth";
+import { RegisterFormData, registerSchema } from "@/schemas/auth";
+import { zodResolver } from "@hookform/resolvers/zod";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import { useForm } from "react-hook-form";
+
+export default function RegistrationForm() {
+  const router = useRouter();
+  const form = useForm<RegisterFormData>({
+    resolver: zodResolver(registerSchema),
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  });
+
+  async function onSubmit(data: RegisterFormData) {
+    console.log(data);
+    const response = await register(data);
+    if (!response.success) {
+      alert(response.message);
+      return;
+    }
+    router.push("/");
+  }
+
   return (
     <>
       <div className="flex flex-col w-full max-w-md p-3 m-auto rounded-xl mt-8">
@@ -8,12 +34,13 @@ export default function Register() {
           <h1 className="text-xl font-semibold">Register</h1>
           <p className="text-sm text-gray-500"> Create your account here.</p>
         </header>
-        <form>
+        <form onSubmit={form.handleSubmit(onSubmit)}>
           <div>
             <label className="block mb-2 font-semibold" htmlFor="username">
               Full Name
             </label>
             <input
+              {...form.register("name")}
               className="w-full p-2 mb-6 border-b-2 outline-none bg-gray-300 focus:bg-gray-300"
               type="text"
               name="name"
@@ -25,6 +52,7 @@ export default function Register() {
               Email
             </label>
             <input
+              {...form.register("email")}
               className="w-full p-2 mb-6 border-b-2 outline-none bg-gray-300 focus:bg-gray-300"
               type="text"
               name="email"
@@ -36,6 +64,7 @@ export default function Register() {
               Password
             </label>
             <input
+              {...form.register("password")}
               className="w-full p-2 mb-6 border-b-2  bg-gray-300 outline-none focus:bg-gray-300"
               type="password"
               name="password"
