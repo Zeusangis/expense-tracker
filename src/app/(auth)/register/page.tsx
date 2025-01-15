@@ -4,7 +4,7 @@ import { register } from "@/actions/auth/auth";
 import { RegisterFormData, registerSchema } from "@/schemas/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 
 export default function RegistrationForm() {
@@ -72,16 +72,18 @@ export default function RegistrationForm() {
             />
           </div>
           <div>
-            <input
+            <button
               className="w-full bg-black hover:bg-gray-700 text-white font-bold py-2 px-4 mb-6 rounded"
               type="submit"
-            />
+            >
+              Register
+            </button>
           </div>
         </form>
         <footer>
           <Link
             className="text-sm float-right hover:text-gray-600"
-            href="/register"
+            href="/login"
           >
             Already have an account?
           </Link>

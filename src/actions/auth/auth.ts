@@ -1,3 +1,5 @@
+"use server";
+
 import prisma from "@/lib/db";
 import bcrypt from "bcryptjs";
 import { cookies } from "next/headers";
@@ -71,7 +73,7 @@ export async function register(data: RegisterFormData) {
     };
   }
 
-  const user = await prisma.user.create({
+  await prisma.user.create({
     data: {
       name,
       email,
@@ -79,7 +81,7 @@ export async function register(data: RegisterFormData) {
     },
   });
   return {
-    success: user,
+    success: true,
     message: "User created successfully",
   };
 }
