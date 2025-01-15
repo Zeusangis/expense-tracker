@@ -1,5 +1,47 @@
 @import "tailwindcss";
 
-/* @theme {
-  --color-primary: #3c50e0;
+@theme {
+  --color-background: #ffffff;
+  --color-foreground: #1c1917;
+  --color-muted: #f1f5f9;
+  --color-muted-foreground: #6b7280;
+  --color-popover: #ffffff;
+  --color-popover-foreground: #1c1917;
+  --color-border: #e2e8f0;
+  --color-input: #e2e8f0;
+  --color-card: #ffffff;
+  --color-card-foreground: #1c1917;
+  --color-primary: #1c1917;
+  --color-primary-foreground: #f8fafc;
+  --color-secondary: #f1f5f9;
+  --color-secondary-foreground: #1c1917;
+  --color-accent: #f1f5f9;
+  --color-accent-foreground: #1c1917;
+  --color-destructive: #ff0000;
+  --color-destructive-foreground: #f8fafc;
+  --color-ring: #93c5fd;
+  --color-radius: 0.5rem;
+}
+
+/* 
+.dark {
+  --color-background: #0b0d0d;
+  --color-foreground: #d6d3d1;
+  --color-muted: #1c1917;
+  --color-muted-foreground: #8e9aaf;
+  --color-accent: #282828;
+  --color-accent-foreground: #f8fafc;
+  --color-popover: #0b0d0d;
+  --color-popover-foreground: #93c5fd;
+  --color-border: #282828;
+  --color-input: #282828;
+  --color-card: #0b0d0d;
+  --color-card-foreground: #d6d3d1;
+  --color-primary: #f8fafc;
+  --color-primary-foreground: #151413;
+  --color-secondary: #1c1917;
+  --color-secondary-foreground: #f8fafc;
+  --color-destructive: #a00f0f;
+  --color-destructive-foreground: #f8fafc;
+  --color-ring: #282828;
 } */
