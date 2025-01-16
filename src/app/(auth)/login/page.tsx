@@ -1,6 +1,8 @@
 "use client";
 
 import { login } from "@/actions/auth/auth";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { LoginFormData, loginSchema } from "@/schemas/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
@@ -34,14 +36,14 @@ export default function LoginForm() {
         <h1 className="text-xl font-semibold">Login</h1>
         <p className="text-sm text-gray-500">Login to your account</p>
       </header>
-      <form onSubmit={form.handleSubmit(onSubmit)}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
         <div>
           <label className="block mb-2 font-semibold" htmlFor="email">
             Email
           </label>
-          <input
+          <Input
             {...form.register("email")}
-            className="w-full p-2 mb-6 border-b-2 outline-none bg-gray-300 focus:bg-gray-300"
+            className="w-full"
             type="text"
             id="email"
           />
@@ -55,9 +57,9 @@ export default function LoginForm() {
           <label className="block mb-2 font-semibold" htmlFor="password">
             Password
           </label>
-          <input
+          <Input
             {...form.register("password")}
-            className="w-full p-2 mb-6 border-b-2 bg-gray-300 outline-none focus:bg-gray-300"
+            className="w-full "
             type="password"
             id="password"
           />
@@ -68,15 +70,12 @@ export default function LoginForm() {
           )}
         </div>
         <div>
-          <button
-            className="w-full bg-black hover:bg-gray-700 text-white font-bold py-2 px-4 mb-6 rounded cursor-pointer"
-            type="submit"
-          >
+          <Button className="w-full mt-4" type="submit">
             Login
-          </button>
+          </Button>
         </div>
       </form>
-      <footer>
+      <footer className="mt-4">
         <Link
           className="text-sm float-right hover:text-gray-600"
           href="/register"

@@ -1,6 +1,7 @@
 "use server";
 
 import prisma from "@/lib/db";
+import { getCurrentUser } from "@/utils/currentUser";
 import { revalidatePath } from "next/cache";
 
 export async function createExpense(
@@ -8,9 +9,18 @@ export async function createExpense(
   amount: number,
   categoryId: string
 ) {
+  const user = await getCurrentUser();
+  if (!user?.id) {
+    return {
+      success: false,
+      error: "User not authenticated",
+    };
+  }
+
   try {
     const expense = await prisma.expense.create({
       data: {
+        userId: user.id,
         title,
         amount,
         categoryId,

@@ -15,12 +15,15 @@ model User {
   password  String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  expenses  Expense[]
 }
 
 model Expense{
   id          String   @id @default(cuid())
   title       String
   amount      Float
+  user        User     @relation(fields: [userId], references: [id])
+  userId      String
   category    Category @relation(fields: [categoryId], references: [id])
   categoryId  String
   createdAt   DateTime @default(now())

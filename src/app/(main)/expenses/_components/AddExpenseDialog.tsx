@@ -53,6 +53,7 @@ const AddExpenseDialog = ({ categories }: AddExpenseDialogProps) => {
         setError(null);
         document.getElementById("expenseAddDialog")?.click();
       } else {
+        console.log(response);
         setError("Failed to add expense. Please try again.");
       }
     } catch (error) {
