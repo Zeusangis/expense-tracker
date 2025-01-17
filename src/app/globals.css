@@ -1,5 +1,5 @@
 @import "tailwindcss";
-
+@import "./scrollbar-hide.css";
 @theme {
   --color-background: #ffffff;
   --color-foreground: #1c1917;

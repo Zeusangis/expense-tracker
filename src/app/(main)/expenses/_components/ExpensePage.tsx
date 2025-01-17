@@ -3,7 +3,6 @@ import AddExpenseDialog from "./AddExpenseDialog";
 import prisma from "@/lib/db";
 import { getCurrentUser } from "@/utils/currentUser";
 import { formatDistanceToNow } from "date-fns";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import DeleteButton from "./DeleteButton";
 import { DollarCircle } from "iconsax-react";
 import { DollarSign } from "lucide-react";
@@ -38,13 +37,13 @@ export default async function ExpensesPage() {
         </p>
       </div>
 
-      <ScrollArea className="flex-grow h-[446.5px]">
+      <div className="max-h-[446.5px] overflow-y-scroll scrollbar-hide">
         {expenses.length === 0 ? (
           <p className="text-center text-gray-500 mt-8">
             No expenses found. Add your first expense!
           </p>
         ) : (
-          <ul className="space-y-3">
+          <ul className="space-y-3 ">
             {expenses.map((expense) => {
               const category = categories.find(
                 (c) => c.id === expense.categoryId
@@ -86,7 +85,7 @@ export default async function ExpensesPage() {
             })}
           </ul>
         )}
-      </ScrollArea>
+      </div>
     </div>
   );
 }

@@ -1,0 +1,20 @@
+[
+  {
+    "id": "cm60jy2n3000dhj53clbj0qzu",
+    "title": "Chicken",
+    "amount": 10,
+    "userId": "cm5yk1j370004hjrtwdy4n5vl",
+    "categoryId": "cm5yhfoui0000hj06f4tl9oka",
+    "createdAt": "2025-01-17T09:23:26.559Z",
+    "updatedAt": "2025-01-17T09:23:26.559Z"
+  },
+  {
+    "id": "cm60jyc19000fhj53gcy7539n",
+    "title": "Jacket",
+    "amount": 15,
+    "userId": "cm5yk1j370004hjrtwdy4n5vl",
+    "categoryId": "cm5yhgeic0002hj060q2xthz7",
+    "createdAt": "2025-01-17T09:23:38.734Z",
+    "updatedAt": "2025-01-17T09:23:38.734Z"
+  }
+]

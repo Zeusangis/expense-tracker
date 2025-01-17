@@ -31,7 +31,7 @@ const menuItems: MenuItem[] = [
 
 export default function HoverMenu() {
   return (
-    <div className="py-3 w-full flex justify-between rounded-xl hover:shadow-xl transition-all duration-300">
+    <div className="py-3 w-full flex justify-between rounded-xl transition-all duration-300">
       {menuItems.map((item, index) => (
         <Link key={index} href={item.url}>
           <div key={index} className="group relative cursor-pointer">
