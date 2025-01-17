@@ -20,9 +20,7 @@ export default function LoginForm() {
   });
 
   async function onSubmit(data: LoginFormData) {
-    console.log(data);
     const response = await login(data);
-    console.log(response);
     if (!response.success) {
       alert(response.message);
       return;
