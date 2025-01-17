@@ -10,7 +10,7 @@ interface DeleteButtonProps {
 }
 
 function DeleteButton({ id }: DeleteButtonProps) {
-  const [isPending, startTransition] = useTransition();
+  const [, startTransition] = useTransition();
 
   const handleDelete = () => {
     startTransition(async () => {
