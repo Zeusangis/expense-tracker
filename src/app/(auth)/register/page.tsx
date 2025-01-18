@@ -6,11 +6,12 @@ import { Input } from "@/components/ui/input";
 import { RegisterFormData, registerSchema } from "@/schemas/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { redirect } from "next/navigation";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 
 export default function LoginForm() {
-  const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
   const form = useForm<RegisterFormData>({
     resolver: zodResolver(registerSchema),
     defaultValues: {
@@ -21,16 +22,19 @@ export default function LoginForm() {
   });
 
   async function onSubmit(data: RegisterFormData) {
-    const response = await register(data);
-    console.log(response);
-    if (!response.success) {
-      alert(response.message);
+    try {
+      const response = await register(data);
+      if (response) {
+        const { email, password } = data;
+        await login({ email, password });
+        return redirect("/");
+      }
+    } catch (error) {
+      console.error(error);
       return;
+    } finally {
+      setIsLoading(false);
     }
-    const { email, password } = data;
-    const loginData = { email, password };
-    login(loginData);
-    router.push("/");
   }
 
   return (
@@ -89,9 +93,15 @@ export default function LoginForm() {
           )}
         </div>
         <div>
-          <Button className="w-full mt-4" type="submit">
-            Register
-          </Button>
+          {isLoading ? (
+            <Button className="w-full mt-4 bg-gray-700" disabled>
+              Registering...
+            </Button>
+          ) : (
+            <Button className="w-full mt-4" type="submit">
+              Register
+            </Button>
+          )}
         </div>
       </form>
       <footer className="mt-4">

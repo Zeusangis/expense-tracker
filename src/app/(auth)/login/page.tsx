@@ -7,10 +7,13 @@ import { LoginFormData, loginSchema } from "@/schemas/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 
 export default function LoginForm() {
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
+
   const form = useForm<LoginFormData>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -20,12 +23,17 @@ export default function LoginForm() {
   });
 
   async function onSubmit(data: LoginFormData) {
-    const response = await login(data);
-    if (!response.success) {
-      alert(response.message);
-      return;
+    try {
+      setIsLoading(true);
+      const response = await login(data);
+      if (response) {
+        router.push("/");
+      }
+    } catch (error) {
+      console.error(error);
+    } finally {
+      return setIsLoading(false);
     }
-    router.push("/");
   }
 
   return (
@@ -68,9 +76,15 @@ export default function LoginForm() {
           )}
         </div>
         <div>
-          <Button className="w-full mt-4" type="submit">
-            Login
-          </Button>
+          {isLoading ? (
+            <Button className="w-full mt-4 bg-gray-700" disabled>
+              Logging in...
+            </Button>
+          ) : (
+            <Button className="w-full mt-4" type="submit">
+              Login
+            </Button>
+          )}
         </div>
       </form>
       <footer className="mt-4">
