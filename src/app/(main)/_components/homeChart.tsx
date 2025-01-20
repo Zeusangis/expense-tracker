@@ -1,15 +1,7 @@
 "use client";
 
 import { ScrollArea } from "@/components/ui/scroll-area";
-import {
-  Line,
-  LineChart,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Legend,
-  ResponsiveContainer,
-} from "recharts";
+import { Line, LineChart, XAxis, YAxis, CartesianGrid, Legend } from "recharts";
 import {
   ChartContainer,
   ChartTooltip,
@@ -52,8 +44,6 @@ export default function Home({ transformedData: data }: HomeProps) {
     return acc;
   }, [] as number[]);
 
-  console.log(weeklyTotal);
-  console.log(total);
   return (
     <>
       <div>
@@ -122,24 +112,22 @@ export default function Home({ transformedData: data }: HomeProps) {
             }}
             className="h-auto w-[295px]"
           >
-            <ResponsiveContainer width="100%" height="100%">
-              <LineChart
-                data={data}
-                margin={{ top: 5, right: 30, left: 0, bottom: 5 }}
-              >
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="date" />
-                <YAxis />
-                <ChartTooltip content={<ChartTooltipContent />} />
-                <Legend />
-                <Line
-                  type="monotone"
-                  dataKey="expense"
-                  stroke="var(--color-sales)"
-                  name="Daily Expenses"
-                />
-              </LineChart>
-            </ResponsiveContainer>
+            <LineChart
+              data={data}
+              margin={{ top: 5, right: 30, left: 0, bottom: 5 }}
+            >
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="date" />
+              <YAxis />
+              <ChartTooltip content={<ChartTooltipContent />} />
+              <Legend />
+              <Line
+                type="monotone"
+                dataKey="expense"
+                stroke="var(--color-sales)"
+                name="Daily Expenses"
+              />
+            </LineChart>
           </ChartContainer>
         </ScrollArea>
       </div>

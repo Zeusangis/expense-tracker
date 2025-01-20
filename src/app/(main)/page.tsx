@@ -14,8 +14,29 @@ async function HomePage() {
         createdAt: "asc",
       },
     ],
+    include: {
+      category: true, // Include the category relation
+    },
   });
 
+  // Process data for the pie chart
+  const categoryExpenses = rawData.reduce((acc, expense) => {
+    const categoryName = expense.category?.name || "Uncategorized";
+    if (!acc[categoryName]) {
+      acc[categoryName] = 0;
+    }
+    acc[categoryName] += expense.amount || 0;
+    return acc;
+  }, {} as Record<string, number>);
+
+  const pieChartData = Object.entries(categoryExpenses).map(
+    ([name, value]) => ({
+      name,
+      value,
+    })
+  );
+
+  // Process data for the daily expenses chart
   const dailyExpenses = rawData.reduce<Record<string, number>>(
     (acc, expense) => {
       const date = formatDate(new Date(expense.createdAt), "MMM dd");
@@ -35,13 +56,11 @@ async function HomePage() {
     })
   );
 
-  console.log(transformedData); // Log the transformed data
-
   return (
-    <div className="min-h-[446.5px] max-h-[519px] overflow-y-auto">
+    <div className="min-h-[446.5px] max-h-[519px] overflow-y-auto scrollbar-hide">
       <Home transformedData={transformedData} />
       <div className="flex h-auto justify-center items-center mt-6">
-        <PieChartComponent />
+        <PieChartComponent data={pieChartData} />
       </div>
     </div>
   );

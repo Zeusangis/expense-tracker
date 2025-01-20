@@ -1,24 +1,25 @@
 "use client";
 
-import React from "react";
-import { PieChart, Pie, Cell, ResponsiveContainer, Legend } from "recharts";
+import React, { useMemo } from "react";
+import { PieChart, Pie, Cell, Legend, Tooltip } from "recharts";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import {
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
-} from "@/components/ui/chart";
-
-const data = [
-  { name: "Food & Dining", value: 350, color: "#FF6384" },
-  { name: "Transportation", value: 250, color: "#36A2EB" },
-  { name: "Shopping", value: 200, color: "#FFCE56" },
-  { name: "Utilities", value: 150, color: "#4BC0C0" },
-  { name: "Entertainment", value: 100, color: "#9966FF" },
-  { name: "Other", value: 50, color: "#FF9F40" },
-];
+import { ChartContainer } from "@/components/ui/chart";
 
 const RADIAN = Math.PI / 180;
+const COLORS = [
+  "#FF6384",
+  "#36A2EB",
+  "#FFCE56",
+  "#4BC0C0",
+  "#9966FF",
+  "#FF9F40",
+  "#FF6384",
+  "#C9CBCF",
+  "#4BC0C0",
+  "#FF6384",
+];
+
+// Customized label for the pie chart
 const renderCustomizedLabel = ({
   cx,
   cy,
@@ -26,7 +27,13 @@ const renderCustomizedLabel = ({
   innerRadius,
   outerRadius,
   percent,
-  index,
+}: {
+  cx: number;
+  cy: number;
+  midAngle: number;
+  innerRadius: number;
+  outerRadius: number;
+  percent: number;
 }) => {
   const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
   const x = cx + radius * Math.cos(-midAngle * RADIAN);
@@ -46,36 +53,22 @@ const renderCustomizedLabel = ({
   );
 };
 
-interface payloadPropType {
-  payload: {
-    name: string;
-    value: number;
-    color: string;
-    payload: { value: number };
-  }[];
-}
+const ExpensePieChart = ({
+  data,
+}: {
+  data: Array<{ name: string; value: number }>;
+}) => {
+  const chartData = useMemo(() => {
+    return Array.isArray(data) && data.length > 0
+      ? data
+      : [{ name: "No Data", value: 1 }];
+  }, [data]);
 
-const CustomLegend = ({ payload }: payloadPropType) => {
-  return (
-    <div className="flex flex-col gap-2 text-sm">
-      {payload.map((entry, index) => (
-        <div key={`legend-${index}`} className="flex items-center gap-2">
-          <div
-            className="w-3 h-3 rounded-full"
-            style={{ backgroundColor: entry.color }}
-          />
-          <span className="text-gray-600">
-            {entry.value} - ${data[index].value} (
-            {((data[index].value / entry.payload.value) * 100).toFixed(1)}%)
-          </span>
-        </div>
-      ))}
-    </div>
-  );
-};
-
-const ExpensePieChart = () => {
-  const total = data.reduce((sum, item) => sum + item.value, 0);
+  const colorMap = useMemo(() => {
+    return Object.fromEntries(
+      chartData.map((item, index) => [item.name, COLORS[index % COLORS.length]])
+    );
+  }, [chartData]);
 
   return (
     <Card className="max-w-[300px] bg-white shadow-none border-none flex flex-col">
@@ -87,52 +80,44 @@ const ExpensePieChart = () => {
       <CardContent className="pt-0">
         <ChartContainer
           config={Object.fromEntries(
-            data.map((item) => [
+            chartData.map((item) => [
               item.name,
-              { label: item.name, color: item.color },
+              { label: item.name, color: colorMap[item.name] },
             ])
           )}
-          className="h-[310px] w-[200px]"
+          className="h-[310px] w-full"
         >
-          <ResponsiveContainer>
-            <PieChart>
-              <Pie
-                data={data}
-                cx="-100%"
-                cy="25%"
-                labelLine={false}
-                label={renderCustomizedLabel}
-                outerRadius={80}
-                fill="#8884d8"
-                dataKey="value"
-              >
-                {data.map((entry, index) => (
-                  <Cell
-                    key={`cell-${index}`}
-                    fill={entry.color}
-                    strokeWidth={0}
-                  />
-                ))}
-              </Pie>
-              <ChartTooltip
-                content={<ChartTooltipContent />}
-                cursor={{ fill: "transparent" }}
-              />
-              <Legend
-                layout="vertical"
-                align="left"
-                verticalAlign="bottom"
-                formatter={(value, entry) => (
-                  <span className="text-xs">
-                    {value} - ${entry.payload?.value}
-                  </span>
-                )}
-                wrapperStyle={{
-                  paddingTop: "20px",
-                }}
-              />
-            </PieChart>
-          </ResponsiveContainer>
+          <PieChart width={300} height={300}>
+            <Pie
+              data={chartData}
+              cx="50%"
+              cy="45%"
+              labelLine={false}
+              label={renderCustomizedLabel}
+              outerRadius={80}
+              fill="#8884d8"
+              dataKey="value"
+            >
+              {chartData.map((entry, index) => (
+                <Cell
+                  key={`cell-${index}`}
+                  fill={colorMap[entry.name]}
+                  strokeWidth={0}
+                />
+              ))}
+            </Pie>
+            <Tooltip />
+            <Legend
+              layout="vertical"
+              align="center"
+              verticalAlign="bottom"
+              formatter={(value, entry: any) => (
+                <span className="text-xs">{`${value} - $${
+                  entry.payload?.value || 0
+                }`}</span>
+              )}
+            />
+          </PieChart>
         </ChartContainer>
       </CardContent>
     </Card>
