@@ -10,7 +10,7 @@ import { updateProfile } from "@/actions/updateProfile";
 interface EditProfileProps {
   user: {
     id: string;
-    name: string;
+    name: string | null;
     email: string;
   };
 }
@@ -58,7 +58,7 @@ const EditProfile: React.FC<EditProfileProps> = ({ user }) => {
           <Label htmlFor="name">Full Name</Label>
           <Input
             id="name"
-            value={name}
+            value={name || ""}
             onChange={(e) => setName(e.target.value)}
             placeholder="John Doe"
           />
