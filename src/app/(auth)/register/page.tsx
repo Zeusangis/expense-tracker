@@ -6,12 +6,13 @@ import { Input } from "@/components/ui/input";
 import { RegisterFormData, registerSchema } from "@/schemas/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/router";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 
 export default function LoginForm() {
   const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
   const form = useForm<RegisterFormData>({
     resolver: zodResolver(registerSchema),
     defaultValues: {
@@ -25,9 +26,8 @@ export default function LoginForm() {
     try {
       const response = await register(data);
       if (response) {
-        const { email, password } = data;
-        await login({ email, password });
-        return redirect("/");
+        await login(data);
+        router.push("/");
       }
     } catch (error) {
       console.error(error);

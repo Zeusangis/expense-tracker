@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import { Jost } from "next/font/google";
+import { Roboto } from "next/font/google";
 import "./globals.css";
 
-const jost = Jost({
+const roboto = Roboto({
   weight: "400",
   style: "normal",
   subsets: ["latin"],
@@ -20,7 +20,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${jost.className} antialiased`}>{children}</body>
+      <body className={`${roboto.className} antialiased`}>{children}</body>
     </html>
   );
 }
