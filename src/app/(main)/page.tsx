@@ -57,12 +57,20 @@ async function HomePage() {
   );
 
   return (
-    <div className="min-h-[446.5px] max-h-[519px] overflow-y-auto scrollbar-hide">
-      <Home transformedData={transformedData} />
-      <div className="flex h-auto justify-center items-center mt-6">
-        <PieChartComponent data={pieChartData} />
-      </div>
-    </div>
+    <>
+      {transformedData.length > 0 ? (
+        <div className="min-h-[446.5px] max-h-[519px] overflow-y-auto scrollbar-hide">
+          <Home transformedData={transformedData} />
+          <div className="flex h-auto justify-center items-center mt-6">
+            <PieChartComponent data={pieChartData} />
+          </div>
+        </div>
+      ) : (
+        <div className="flex flex-col justify-center items-center h-[446.5px]">
+          <p className="text-gray-500 text-lg">No expenses found</p>
+        </div>
+      )}
+    </>
   );
 }
 
